@@ -12,7 +12,7 @@ from functools import lru_cache
 
 """
 define f(n) = n if n < 3
-              f(n - 1) + 2*f(n - 2) + 3*f(n - 3) if n <= 3
+              f(n - 1) + 2*f(n - 2) + 3*f(n - 3) if n >= 3
 implement f(n) by recursive and iterative method
 """
 
