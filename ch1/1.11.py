@@ -25,52 +25,24 @@ def recursive_fn(n: int):
     return recursive_fn(n - 1) + 2 * recursive_fn(n - 2) + 3 * recursive_fn(n - 3)
 
 
-def raw_iterative_fn(n: int):
+def iterative_fn(n: int):
     if n < 3:
         return n
 
-    def _iter(a, b, c, n1):
-        if n1 < 3:
-            return a
-        return _iter(a + 2 * b + c * 3, a, b, n1 - 1)
+    a, b, c = 2, 1, 0
 
-    return _iter(2, 1, 0, n)
+    for _ in range(2, n):
+        tmp = a + 2 * b + 3 * c
+        a, b, c = tmp, a, b
 
-
-def stack_iterative_fn(n: int):
-    if n < 3:
-        return n
-
-    class Stack(object):
-        def __init__(self):
-            self.stack = []
-
-        def push(self, item):
-            self.stack.append(item)
-
-        def pop(self):
-            return self.stack.pop()
-
-        def empty(self):
-            return len(self.stack) == 0
-
-        def size(self):
-            return len(self.stack)
-
-    stack = Stack()
-    stack.push((2, 1, 0, n))
-
-    while not stack.empty():
-        a, b, c, n1 = stack.pop()
-
-        if n1 < 3:
-            return a
-
-        stack.push((a + 2 * b + 3 * c, a, b, n1 - 1))
+    return a
 
 
 if __name__ == '__main__':
-    num = 100
-    print(recursive_fn(num))
-    print(raw_iterative_fn(num))
-    print(stack_iterative_fn(num))
+    num = 1000
+
+    for i in range(100):
+        assert recursive_fn(i) == iterative_fn(i)
+        print(iterative_fn(i))
+
+    print(iterative_fn(n=10000))
